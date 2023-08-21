@@ -1,0 +1,142 @@
+Neural Network Tools for STM32 family v1.7.0 (stm.ai v8.1.0-19520)
+Created date          : 2023-08-18 10:23:35
+Parameters            : generate --name cooler_nn -m C:/Users/Henrique/Documents/model_cooler.tflite --type tflite --compression none --verbosity 1 --workspace C:\Users\Henrique\AppData\Local\Temp\mxAI_workspace82076376669580015127185291258662852 --output C:\Users\Henrique\.stm32cubemx\network_output --allocate-inputs --series stm32f4 --allocate-outputs
+
+Exec/report summary (generate)
+----------------------------------------------------------------------------------------------------------------
+model file         :   C:\Users\Henrique\Documents\model_cooler.tflite                                          
+type               :   tflite                                                                                   
+c_name             :   cooler_nn                                                                                
+compression        :   none                                                                                     
+options            :   allocate-inputs, allocate-outputs                                                        
+optimization       :   balanced                                                                                 
+target/series      :   stm32f4                                                                                  
+workspace dir      :   C:\Users\Henrique\AppData\Local\Temp\mxAI_workspace82076376669580015127185291258662852   
+output dir         :   C:\Users\Henrique\.stm32cubemx\network_output                                            
+model_fmt          :   float                                                                                    
+model_name         :   model_cooler                                                                             
+model_hash         :   3ca6c48013f4cb58389bd57b5dc3bd67                                                         
+params #           :   19,352 items (75.59 KiB)                                                                 
+----------------------------------------------------------------------------------------------------------------
+input 1/1          :   'serving_default_input_5' (domain:activations/**default**)                               
+                   :   384 items, 1.50 KiB, ai_float, float, (1,384)                                            
+output 1/1         :   'nl_2' (domain:activations/**default**)                                                  
+                   :   2 items, 8 B, ai_float, float, (1,2)                                                     
+macc               :   19,432                                                                                   
+weights (ro)       :   77,408 B (75.59 KiB) (1 segment)                                                         
+activations (rw)   :   1,736 B (1.70 KiB) (1 segment) *                                                         
+ram (total)        :   1,736 B (1.70 KiB) = 1,736 + 0 + 0                                                       
+----------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers can be used from the activations buffer
+
+Model name - model_cooler ['serving_default_input_5'] ['nl_2']
+------ ------------------------------------------------------------------------------------------------------------------------ ------------------- --------------- -------- -------------------------------------------------------------------------------------------------------- --- ------------------ ------------------ -------------------------- 
+m_id   layer (type,original)                                                                                                    oshape              param/size          macc                                                                                             connected to   | c_size             c_macc             c_type                     
+------ ------------------------------------------------------------------------------------------------------------------------ ------------------- --------------- -------- -------------------------------------------------------------------------------------------------------- --- ------------------ ------------------ -------------------------- 
+0      serving_default_input_5 (Input, )                                                                                        [b:1,c:384]                                                                                                                                             | +77,000(+100.0%)   +19,300(+100.0%)   dense_of32/nl_of32[0, 1]   
+       sequential_4_dense_8_MatMulStatefulPartitionedCall_StatefulPartitionedCall_sequential_4_dense_8_MatMul (Placeholder, )   [h:50,h:50,c:384]   19,200/76,800                                                                                                                       | -76,800(-100.0%)                      
+       dense_8_bias (Placeholder, )                                                                                             [c:50]              50/200                                                                                                                              | -200(-100.0%)                         
+       gemm_0 (Gemm, FULLY_CONNECTED)                                                                                           [b:1,c:50]                            19,250                                                                                  serving_default_input_5   |                    -19,250(-100.0%)   
+                                                                                                                                                                               sequential_4_dense_8_MatMulStatefulPartitionedCall_StatefulPartitionedCall_sequential_4_dense_8_MatMul   | 
+                                                                                                                                                                                                                                                                         dense_8_bias   | 
+       nl_0_nl (Nonlinearity, FULLY_CONNECTED)                                                                                  [b:1,c:50]                                50                                                                                                   gemm_0   |                    -50(-100.0%)       
+------ ------------------------------------------------------------------------------------------------------------------------ ------------------- --------------- -------- -------------------------------------------------------------------------------------------------------- --- ------------------ ------------------ -------------------------- 
+1      sequential_4_dense_9_MatMulStatefulPartitionedCall_StatefulPartitionedCall_sequential_4_dense_9_MatMul (Placeholder, )   [h:2,h:2,c:50]      100/400                                                                                                                             | +8(+2.0%)          +102(+100.0%)      dense_of32[2]              
+       dense_9_bias (Placeholder, )                                                                                             [c:2]               2/8                                                                                                                                 | -8(-100.0%)                           
+       gemm_1 (Gemm, FULLY_CONNECTED)                                                                                           [b:1,c:2]                                102                                                                                                  nl_0_nl   |                    -102(-100.0%)      
+                                                                                                                                                                               sequential_4_dense_9_MatMulStatefulPartitionedCall_StatefulPartitionedCall_sequential_4_dense_9_MatMul   | 
+                                                                                                                                                                                                                                                                         dense_9_bias   | 
+------ ------------------------------------------------------------------------------------------------------------------------ ------------------- --------------- -------- -------------------------------------------------------------------------------------------------------- --- ------------------ ------------------ -------------------------- 
+2      nl_2 (Nonlinearity, SOFTMAX)                                                                                             [b:1,c:2]                                 30                                                                                                   gemm_1   |                                       nl_of32[o][3]              
+------ ------------------------------------------------------------------------------------------------------------------------ ------------------- --------------- -------- -------------------------------------------------------------------------------------------------------- --- ------------------ ------------------ -------------------------- 
+model/c-model: macc=19,432/19,432  weights=77,408/77,408  activations=--/1,736 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : model_cooler
+c-name                : cooler_nn
+c-node #              : 4
+c-array #             : 9
+activations size      : 1736 (1 segment)
+weights size          : 77408 (1 segment)
+macc                  : 19432
+inputs                : ['serving_default_input_5_output']
+outputs               : ['nl_2_output']
+
+C-Arrays (9)
+------ -------------------------------- ------------- ------------------------- ------------- --------- --------- 
+c_id   name (*_array)                   item/size     domain/mem-pool           c-type        fmt       comment   
+------ -------------------------------- ------------- ------------------------- ------------- --------- --------- 
+0      gemm_0_bias                      50/200        weights/weights           const float   float32             
+1      gemm_1_weights                   100/400       weights/weights           const float   float32             
+2      gemm_1_bias                      2/8           weights/weights           const float   float32             
+3      serving_default_input_5_output   384/1536      activations/**default**   float         float32   /input    
+4      gemm_0_output                    50/200        activations/**default**   float         float32             
+5      nl_0_nl_output                   50/200        activations/**default**   float         float32             
+6      gemm_1_output                    2/8           activations/**default**   float         float32             
+7      nl_2_output                      2/8           activations/**default**   float         float32   /output   
+8      gemm_0_weights                   19200/76800   weights/weights           const float   float32             
+------ -------------------------------- ------------- ------------------------- ------------- --------- --------- 
+
+C-Layers (4)
+------ ---------------- ---- ------------ ------- ------- ----------------------------------- ------------------ 
+c_id   name (*_layer)   id   layer_type   macc    rom     tensors                             shape (array id)   
+------ ---------------- ---- ------------ ------- ------- ----------------------------------- ------------------ 
+0      gemm_0           0    dense        19250   77000   I: serving_default_input_5_output   (1,384) (3)        
+                                                          W: gemm_0_weights                   (384,50) (8)       
+                                                          W: gemm_0_bias                      (50,) (0)          
+                                                          O: gemm_0_output                    (1,50) (4)         
+------ ---------------- ---- ------------ ------- ------- ----------------------------------- ------------------ 
+1      nl_0_nl          0    nl           50      0       I: gemm_0_output                    (1,50) (4)         
+                                                          O: nl_0_nl_output                   (1,50) (5)         
+------ ---------------- ---- ------------ ------- ------- ----------------------------------- ------------------ 
+2      gemm_1           1    dense        102     408     I: nl_0_nl_output                   (1,50) (5)         
+                                                          W: gemm_1_weights                   (50,2) (1)         
+                                                          W: gemm_1_bias                      (2,) (2)           
+                                                          O: gemm_1_output                    (1,2) (6)          
+------ ---------------- ---- ------------ ------- ------- ----------------------------------- ------------------ 
+3      nl_2             2    nl           30      0       I: gemm_1_output                    (1,2) (6)          
+                                                          O: nl_2_output                      (1,2) (7)          
+------ ---------------- ---- ------------ ------- ------- ----------------------------------- ------------------ 
+
+
+
+Number of operations per c-layer
+------- ------ ---------------- -------- -------------- -------- ---------- 
+c_id    m_id   name (type)           #op           type   #param   sparsity 
+------- ------ ---------------- -------- -------------- -------- ---------- 
+0       0      gemm_0 (dense)     19,250   smul_f32_f32   19,250     0.0011 
+1       0      nl_0_nl (nl)           50     op_f32_f32          
+2       1      gemm_1 (dense)        102   smul_f32_f32      102     0.0000 
+3       2      nl_2 (nl)              30     op_f32_f32          
+------- ------ ---------------- -------- -------------- -------- ---------- 
+total                             19,432                  19,352     0.0011 
+
+Number of operation types
+---------------- -------- ----------- 
+operation type          #           % 
+---------------- -------- ----------- 
+smul_f32_f32       19,352       99.6% 
+op_f32_f32             80        0.4% 
+
+Complexity report (model)
+------ -------------------------------------------------------------------------------------------------------- ------------------------- ------------------------- -------- 
+m_id   name                                                                                                     c_macc                    c_rom                     c_id     
+------ -------------------------------------------------------------------------------------------------------- ------------------------- ------------------------- -------- 
+0      serving_default_input_5                                                                                  ||||||||||||||||  99.3%   ||||||||||||||||  99.5%   [0, 1]   
+1      sequential_4_dense_9_MatMulStatefulPartitionedCall_StatefulPartitionedCall_sequential_4_dense_9_MatMul   |                  0.5%   |                  0.5%   [2]      
+2      nl_2                                                                                                     |                  0.2%   |                  0.0%   [3]      
+------ -------------------------------------------------------------------------------------------------------- ------------------------- ------------------------- -------- 
+macc=19,432 weights=77,408 act=1,736 ram_io=0
+
+Generated files (7)
+----------------------------------------------------------------------- 
+C:\Users\Henrique\.stm32cubemx\network_output\cooler_nn_config.h        
+C:\Users\Henrique\.stm32cubemx\network_output\cooler_nn.h               
+C:\Users\Henrique\.stm32cubemx\network_output\cooler_nn.c               
+C:\Users\Henrique\.stm32cubemx\network_output\cooler_nn_data_params.h   
+C:\Users\Henrique\.stm32cubemx\network_output\cooler_nn_data_params.c   
+C:\Users\Henrique\.stm32cubemx\network_output\cooler_nn_data.h          
+C:\Users\Henrique\.stm32cubemx\network_output\cooler_nn_data.c          
