@@ -1,0 +1,151 @@
+Neural Network Tools for STM32 family v1.7.0 (stm.ai v8.1.0-19520)
+Created date          : 2023-08-22 08:36:40
+Parameters            : generate --name cooler -m C:/Users/Henrique/Documents/cooler.tflite --type tflite --compression none --verbosity 1 --workspace C:\Users\Henrique\AppData\Local\Temp\mxAI_workspace3325380373819004988216874410155466 --output C:\Users\Henrique\.stm32cubemx\network_output --allocate-inputs --series stm32f4 --allocate-outputs
+
+Exec/report summary (generate)
+---------------------------------------------------------------------------------------------------------------
+model file         :   C:\Users\Henrique\Documents\cooler.tflite                                               
+type               :   tflite                                                                                  
+c_name             :   cooler                                                                                  
+compression        :   none                                                                                    
+options            :   allocate-inputs, allocate-outputs                                                       
+optimization       :   balanced                                                                                
+target/series      :   stm32f4                                                                                 
+workspace dir      :   C:\Users\Henrique\AppData\Local\Temp\mxAI_workspace3325380373819004988216874410155466   
+output dir         :   C:\Users\Henrique\.stm32cubemx\network_output                                           
+model_fmt          :   float                                                                                   
+model_name         :   cooler                                                                                  
+model_hash         :   d1139307efda6bc935127f167430b776                                                        
+params #           :   115,652 items (451.77 KiB)                                                              
+---------------------------------------------------------------------------------------------------------------
+input 1/1          :   'serving_default_input_10' (domain:activations/**default**)                             
+                   :   768 items, 1.50 KiB, ai_i16, int16_t, (1,768)                                           
+output 1/1         :   'nl_3' (domain:activations/**default**)                                                 
+                   :   2 items, 8 B, ai_float, float, (1,2)                                                    
+macc               :   117,358                                                                                 
+weights (ro)       :   462,608 B (451.77 KiB) (1 segment)                                                      
+activations (rw)   :   3,672 B (3.59 KiB) (1 segment) *                                                        
+ram (total)        :   3,672 B (3.59 KiB) = 3,672 + 0 + 0                                                      
+---------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers can be used from the activations buffer
+
+Model name - cooler ['serving_default_input_10'] ['nl_3']
+------ ----------------------------------------------------------- --------------------- ----------------- --------- ------------------------------------------- --- --------------- ------------------- -------------------------- 
+m_id   layer (type,original)                                       oshape                param/size             macc                                connected to   | c_size          c_macc              c_type                     
+------ ----------------------------------------------------------- --------------------- ----------------- --------- ------------------------------------------- --- --------------- ------------------- -------------------------- 
+0      serving_default_input_10 (Input, )                          [b:1,c:768]                                                                                     |                 +1,536(+100.0%)     cast_of32[0]               
+       cast_0 (Cast, CAST)                                         [b:1,c:768]                                 1,536                    serving_default_input_10   |                 -1,536(-100.0%)     
+------ ----------------------------------------------------------- --------------------- ----------------- --------- ------------------------------------------- --- --------------- ------------------- -------------------------- 
+1      sequential_dense_MatMul (Placeholder, )                     [h:150,h:150,c:768]   115,200/460,800                                                           | +600(+0.1%)     +115,500(+100.0%)   dense_of32/nl_of32[1, 2]   
+       sequential_dense_BiasAdd_ReadVariableOp (Placeholder, )     [c:150]               150/600                                                                   | -600(-100.0%)                       
+       gemm_1 (Gemm, FULLY_CONNECTED)                              [b:1,c:150]                               115,350                                      cast_0   |                 -115,350(-100.0%)   
+                                                                                                                                         sequential_dense_MatMul   | 
+                                                                                                                         sequential_dense_BiasAdd_ReadVariableOp   | 
+       nl_1_nl (Nonlinearity, FULLY_CONNECTED)                     [b:1,c:150]                                   150                                      gemm_1   |                 -150(-100.0%)       
+------ ----------------------------------------------------------- --------------------- ----------------- --------- ------------------------------------------- --- --------------- ------------------- -------------------------- 
+2      sequential_dense_1_MatMul (Placeholder, )                   [h:2,h:2,c:150]       300/1,200                                                                 | +8(+0.7%)       +302(+100.0%)       dense_of32[3]              
+       sequential_dense_1_BiasAdd_ReadVariableOp (Placeholder, )   [c:2]                 2/8                                                                       | -8(-100.0%)                         
+       gemm_2 (Gemm, FULLY_CONNECTED)                              [b:1,c:2]                                     302                                     nl_1_nl   |                 -302(-100.0%)       
+                                                                                                                                       sequential_dense_1_MatMul   | 
+                                                                                                                       sequential_dense_1_BiasAdd_ReadVariableOp   | 
+------ ----------------------------------------------------------- --------------------- ----------------- --------- ------------------------------------------- --- --------------- ------------------- -------------------------- 
+3      nl_3 (Nonlinearity, LOGISTIC)                               [b:1,c:2]                                      20                                      gemm_2   |                                     nl_of32[o][4]              
+------ ----------------------------------------------------------- --------------------- ----------------- --------- ------------------------------------------- --- --------------- ------------------- -------------------------- 
+model/c-model: macc=117,358/117,358  weights=462,608/462,608  activations=--/3,672 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : cooler
+c-name                : cooler
+c-node #              : 5
+c-array #             : 10
+activations size      : 3672 (1 segment)
+weights size          : 462608 (1 segment)
+macc                  : 117358
+inputs                : ['serving_default_input_10_output']
+outputs               : ['nl_3_output']
+
+C-Arrays (10)
+------ --------------------------------- --------------- ------------------------- ------------- --------- --------- 
+c_id   name (*_array)                    item/size       domain/mem-pool           c-type        fmt       comment   
+------ --------------------------------- --------------- ------------------------- ------------- --------- --------- 
+0      gemm_2_output                     2/8             activations/**default**   float         float32             
+1      nl_3_output                       2/8             activations/**default**   float         float32   /output   
+2      gemm_1_weights                    115200/460800   weights/weights           const float   float32             
+3      gemm_1_bias                       150/600         weights/weights           const float   float32             
+4      gemm_2_weights                    300/1200        weights/weights           const float   float32             
+5      gemm_2_bias                       2/8             weights/weights           const float   float32             
+6      serving_default_input_10_output   768/1536        activations/**default**   int16_t       s16       /input    
+7      cast_0_output                     768/3072        activations/**default**   float         float32             
+8      gemm_1_output                     150/600         activations/**default**   float         float32             
+9      nl_1_nl_output                    150/600         activations/**default**   float         float32             
+------ --------------------------------- --------------- ------------------------- ------------- --------- --------- 
+
+C-Layers (5)
+------ ---------------- ---- ------------ -------- -------- ------------------------------------ ------------------ 
+c_id   name (*_layer)   id   layer_type   macc     rom      tensors                              shape (array id)   
+------ ---------------- ---- ------------ -------- -------- ------------------------------------ ------------------ 
+0      cast_0           0    cast         1536     0        I: serving_default_input_10_output   (1,768) (6)        
+                                                            O: cast_0_output                     (1,768) (7)        
+------ ---------------- ---- ------------ -------- -------- ------------------------------------ ------------------ 
+1      gemm_1           1    dense        115350   461400   I: cast_0_output                     (1,768) (7)        
+                                                            W: gemm_1_weights                    (768,150) (2)      
+                                                            W: gemm_1_bias                       (150,) (3)         
+                                                            O: gemm_1_output                     (1,150) (8)        
+------ ---------------- ---- ------------ -------- -------- ------------------------------------ ------------------ 
+2      nl_1_nl          1    nl           150      0        I: gemm_1_output                     (1,150) (8)        
+                                                            O: nl_1_nl_output                    (1,150) (9)        
+------ ---------------- ---- ------------ -------- -------- ------------------------------------ ------------------ 
+3      gemm_2           2    dense        302      1208     I: nl_1_nl_output                    (1,150) (9)        
+                                                            W: gemm_2_weights                    (150,2) (4)        
+                                                            W: gemm_2_bias                       (2,) (5)           
+                                                            O: gemm_2_output                     (1,2) (0)          
+------ ---------------- ---- ------------ -------- -------- ------------------------------------ ------------------ 
+4      nl_3             3    nl           20       0        I: gemm_2_output                     (1,2) (0)          
+                                                            O: nl_3_output                       (1,2) (1)          
+------ ---------------- ---- ------------ -------- -------- ------------------------------------ ------------------ 
+
+
+
+Number of operations per c-layer
+------- ------ ---------------- --------- -------------- --------- ---------- 
+c_id    m_id   name (type)            #op           type    #param   sparsity 
+------- ------ ---------------- --------- -------------- --------- ---------- 
+0       0      cast_0 (cast)        1,536   conv_s16_f32           
+1       1      gemm_1 (dense)     115,350   smul_f32_f32   115,350     0.0004 
+2       1      nl_1_nl (nl)           150     op_f32_f32           
+3       2      gemm_2 (dense)         302   smul_f32_f32       302     0.0000 
+4       3      nl_3 (nl)               20     op_f32_f32           
+------- ------ ---------------- --------- -------------- --------- ---------- 
+total                             117,358                  115,652     0.0004 
+
+Number of operation types
+---------------- --------- ----------- 
+operation type           #           % 
+---------------- --------- ----------- 
+conv_s16_f32         1,536        1.3% 
+smul_f32_f32       115,652       98.5% 
+op_f32_f32             170        0.1% 
+
+Complexity report (model)
+------ --------------------------- ------------------------- ------------------------- -------- 
+m_id   name                        c_macc                    c_rom                     c_id     
+------ --------------------------- ------------------------- ------------------------- -------- 
+0      serving_default_input_10    |                  1.3%   |                  0.0%   [0]      
+1      sequential_dense_MatMul     ||||||||||||||||  98.4%   ||||||||||||||||  99.7%   [1, 2]   
+2      sequential_dense_1_MatMul   |                  0.3%   |                  0.3%   [3]      
+3      nl_3                        |                  0.0%   |                  0.0%   [4]      
+------ --------------------------- ------------------------- ------------------------- -------- 
+macc=117,358 weights=462,608 act=3,672 ram_io=0
+
+Generated files (7)
+-------------------------------------------------------------------- 
+C:\Users\Henrique\.stm32cubemx\network_output\cooler_config.h        
+C:\Users\Henrique\.stm32cubemx\network_output\cooler.h               
+C:\Users\Henrique\.stm32cubemx\network_output\cooler.c               
+C:\Users\Henrique\.stm32cubemx\network_output\cooler_data_params.h   
+C:\Users\Henrique\.stm32cubemx\network_output\cooler_data_params.c   
+C:\Users\Henrique\.stm32cubemx\network_output\cooler_data.h          
+C:\Users\Henrique\.stm32cubemx\network_output\cooler_data.c          
