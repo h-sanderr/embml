@@ -38,7 +38,7 @@ typedef enum {
 	LED_ON
 } led_state_t;
 
-#define ACC_SAMPLES (512)
+#define ACC_SAMPLES (256)
 #define ACC_SAMPLES_FLAT (3 * ACC_SAMPLES)
 typedef struct {
 	int16_t x[ACC_SAMPLES];
@@ -53,7 +53,7 @@ typedef struct {
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define BUFFERS_NEEDED (50)
+#define BUFFERS_NEEDED (100)
 #define CAPTURE_DATA_MODE 0
 
 /* USER CODE END PD */
@@ -358,7 +358,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 #endif
 	  }
-	  HAL_Delay(2);
+	  HAL_Delay(1);
   }
   /* USER CODE END 3 */
 }

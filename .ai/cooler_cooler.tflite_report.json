@@ -1,7 +1,7 @@
 {
     "_allocate_inputs": 4,
     "_allocate_outputs": 4,
-    "cli_parameters": "generate --name cooler -m C:/Users/Henrique/Documents/cooler.tflite --type tflite --compression none --verbosity 1 --workspace C:\\Users\\Henrique\\AppData\\Local\\Temp\\mxAI_workspace3325380373819004988216874410155466 --output C:\\Users\\Henrique\\.stm32cubemx\\network_output --allocate-inputs --series stm32f4 --allocate-outputs",
+    "cli_parameters": "analyze --name cooler -m C:/Users/Henrique/Documents/cooler.tflite --type tflite --compression low --verbosity 1 --workspace C:\\Users\\Henrique\\AppData\\Local\\Temp\\mxAI_workspace3400113112293008237160725170813274 --output C:\\Users\\Henrique\\.stm32cubemx\\network_output --allocate-inputs --series stm32f4 --allocate-outputs",
     "cli_version": {
         "major": 1,
         "micro": 0,
@@ -10,17 +10,19 @@
     "cli_version_str": "1.7.0",
     "code_size": 0,
     "compression": {
-        "factor": null,
-        "layers": {}
+        "factor": 3.9537278153920115,
+        "layers": {
+            "gemm_1_weights": 4.0
+        }
     },
-    "date_time": "Tue Aug 22 08:36:40 2023",
+    "date_time": "Tue Aug 22 10:41:12 2023",
     "error": 0,
     "error_str": [],
-    "exec_cmd": "generate",
+    "exec_cmd": "analyze",
     "exec_duration": 0.0,
-    "hash": "d1139307efda6bc935127f167430b776",
+    "hash": "f470847792b08ad10bfa66b925434cae",
     "inputs": [
-        "serving_default_input_10"
+        "serving_default_input_170"
     ],
     "layers": [
         {
@@ -45,7 +47,7 @@
             },
             "id": 0,
             "inputs": [],
-            "name": "serving_default_input_10",
+            "name": "serving_default_input_170",
             "original": "",
             "type": "Input"
         },
@@ -69,7 +71,7 @@
             },
             "id": 0,
             "inputs": [
-                "serving_default_input_10"
+                "serving_default_input_170"
             ],
             "name": "cast_0",
             "original": "CAST",
@@ -82,13 +84,13 @@
             ],
             "extras": {
                 "n_macc": 0,
-                "n_params": 115200,
-                "psize": 460800,
-                "rom_size": 461400
+                "n_params": 196608,
+                "psize": 786432,
+                "rom_size": 198656
             },
             "id": 1,
             "inputs": [],
-            "name": "sequential_dense_MatMul",
+            "name": "sequential_16_dense_32_MatMul",
             "original": "",
             "type": "Placeholder"
         },
@@ -96,29 +98,29 @@
             "c_id": [],
             "extras": {
                 "n_macc": 0,
-                "n_params": 150,
-                "psize": 600,
+                "n_params": 256,
+                "psize": 1024,
                 "rom_size": 0
             },
             "id": 1,
             "inputs": [],
-            "name": "sequential_dense_BiasAdd_ReadVariableOp",
+            "name": "sequential_16_dense_32_BiasAdd_ReadVariableOp",
             "original": "",
             "type": "Placeholder"
         },
         {
             "c_id": [],
             "extras": {
-                "n_macc": 115350,
+                "n_macc": 196864,
                 "n_params": 0,
                 "psize": 0,
                 "rom_output": {
-                    "c_size": 600,
+                    "c_size": 1024,
                     "fmt": {
                         "format": "float"
                     },
                     "shape": [
-                        150,
+                        256,
                         1
                     ]
                 },
@@ -127,8 +129,8 @@
             "id": 1,
             "inputs": [
                 "cast_0",
-                "sequential_dense_MatMul",
-                "sequential_dense_BiasAdd_ReadVariableOp"
+                "sequential_16_dense_32_MatMul",
+                "sequential_16_dense_32_BiasAdd_ReadVariableOp"
             ],
             "name": "gemm_1",
             "original": "FULLY_CONNECTED",
@@ -137,16 +139,16 @@
         {
             "c_id": [],
             "extras": {
-                "n_macc": 150,
+                "n_macc": 256,
                 "n_params": 0,
                 "psize": 0,
                 "rom_output": {
-                    "c_size": 600,
+                    "c_size": 1024,
                     "fmt": {
                         "format": "float"
                     },
                     "shape": [
-                        150,
+                        256,
                         1
                     ]
                 },
@@ -166,13 +168,13 @@
             ],
             "extras": {
                 "n_macc": 0,
-                "n_params": 300,
-                "psize": 1200,
-                "rom_size": 1208
+                "n_params": 512,
+                "psize": 2048,
+                "rom_size": 2056
             },
             "id": 2,
             "inputs": [],
-            "name": "sequential_dense_1_MatMul",
+            "name": "sequential_16_dense_33_MatMul",
             "original": "",
             "type": "Placeholder"
         },
@@ -186,14 +188,14 @@
             },
             "id": 2,
             "inputs": [],
-            "name": "sequential_dense_1_BiasAdd_ReadVariableOp",
+            "name": "sequential_16_dense_33_BiasAdd_ReadVariableOp",
             "original": "",
             "type": "Placeholder"
         },
         {
             "c_id": [],
             "extras": {
-                "n_macc": 302,
+                "n_macc": 514,
                 "n_params": 0,
                 "psize": 0,
                 "rom_output": {
@@ -211,8 +213,8 @@
             "id": 2,
             "inputs": [
                 "nl_1_nl",
-                "sequential_dense_1_MatMul",
-                "sequential_dense_1_BiasAdd_ReadVariableOp"
+                "sequential_16_dense_33_MatMul",
+                "sequential_16_dense_33_BiasAdd_ReadVariableOp"
             ],
             "name": "gemm_2",
             "original": "FULLY_CONNECTED",
@@ -223,7 +225,7 @@
                 4
             ],
             "extras": {
-                "n_macc": 20,
+                "n_macc": 30,
                 "n_params": 0,
                 "psize": 0,
                 "rom_output": {
@@ -243,16 +245,16 @@
                 "gemm_2"
             ],
             "name": "nl_3",
-            "original": "LOGISTIC",
+            "original": "SOFTMAX",
             "type": "Nonlinearity"
         }
     ],
     "model_files": [
         "C:\\Users\\Henrique\\Documents\\cooler.tflite"
     ],
-    "model_n_params": 115652,
+    "model_n_params": 197378,
     "model_name": "cooler",
-    "model_size": 462608,
+    "model_size": 789512,
     "model_type": "tflite",
     "name": "cooler",
     "outputs": [
@@ -263,8 +265,8 @@
         8
     ],
     "ram_size": [
-        3672,
-        3672
+        4096,
+        4096
     ],
     "report_version": 1.1,
     "rom_cfact": 1.0,
@@ -273,10 +275,10 @@
         {
             "c_size": 1536,
             "c_type": "int16_t",
-            "name": "serving_default_input_10"
+            "name": "serving_default_input_170"
         }
     ],
-    "rom_n_macc": 117358,
+    "rom_n_macc": 199200,
     "rom_outputs": [
         {
             "c_size": 8,
@@ -284,7 +286,7 @@
             "name": "nl_3"
         }
     ],
-    "rom_size": 462608,
+    "rom_size": 200712,
     "strategy": "heap_overlay",
     "tools_api_version": {
         "major": 1,

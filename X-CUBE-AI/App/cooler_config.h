@@ -3,7 +3,7 @@
   ******************************************************************************
   * @file    cooler_config.h
   * @author  AST Embedded Analytics Research Platform
-  * @date    Tue Aug 22 08:36:40 2023
+  * @date    Tue Aug 22 10:38:02 2023
   * @brief   AI Tool Automatic Code Generator for Custom Layers Implementation
   ******************************************************************************
   * @attention

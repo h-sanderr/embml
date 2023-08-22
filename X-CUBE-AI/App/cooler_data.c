@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    cooler_data.c
   * @author  AST Embedded Analytics Research Platform
-  * @date    Tue Aug 22 08:36:40 2023
+  * @date    Tue Aug 22 10:38:02 2023
   * @brief   AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
   * @attention
@@ -21,13 +21,13 @@
 AI_API_DECLARE_BEGIN
 ai_buffer g_cooler_data_map_activations[AI_COOLER_DATA_ACTIVATIONS_COUNT] = {
   AI_BUFFER_INIT(AI_FLAG_NONE,  AI_BUFFER_FORMAT_U8,
-    AI_BUFFER_SHAPE_INIT(AI_SHAPE_BCWH, 4, 1, 3672, 1, 1),
-    3672, NULL, NULL),    /* heap_overlay_pool */
+    AI_BUFFER_SHAPE_INIT(AI_SHAPE_BCWH, 4, 1, 4096, 1, 1),
+    4096, NULL, NULL),    /* heap_overlay_pool */
   };
 ai_buffer g_cooler_data_map_weights[AI_COOLER_DATA_WEIGHTS_COUNT] = {
   AI_BUFFER_INIT(AI_FLAG_NONE,  AI_BUFFER_FORMAT_U8,
-    AI_BUFFER_SHAPE_INIT(AI_SHAPE_BCWH, 4, 1, 462608, 1, 1),
-    462608, NULL, s_cooler_weights_array_u64),   /* weights_array */
+    AI_BUFFER_SHAPE_INIT(AI_SHAPE_BCWH, 4, 1, 200712, 1, 1),
+    200712, NULL, s_cooler_weights_array_u64),   /* weights_array */
   };
 
 

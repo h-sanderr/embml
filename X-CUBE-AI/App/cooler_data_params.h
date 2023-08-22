@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    cooler_data_params.h
   * @author  AST Embedded Analytics Research Platform
-  * @date    Tue Aug 22 08:36:40 2023
+  * @date    Tue Aug 22 10:38:02 2023
   * @brief   AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
   * Copyright (c) 2023 STMicroelectronics.
@@ -29,18 +29,18 @@
 
 
 #define AI_COOLER_DATA_ACTIVATIONS_SIZES \
-  { 3672, }
-#define AI_COOLER_DATA_ACTIVATIONS_SIZE     (3672)
+  { 4096, }
+#define AI_COOLER_DATA_ACTIVATIONS_SIZE     (4096)
 #define AI_COOLER_DATA_ACTIVATIONS_COUNT    (1)
-#define AI_COOLER_DATA_ACTIVATION_1_SIZE    (3672)
+#define AI_COOLER_DATA_ACTIVATION_1_SIZE    (4096)
 
 
 
 #define AI_COOLER_DATA_WEIGHTS_SIZES \
-  { 462608, }
-#define AI_COOLER_DATA_WEIGHTS_SIZE         (462608)
+  { 200712, }
+#define AI_COOLER_DATA_WEIGHTS_SIZE         (200712)
 #define AI_COOLER_DATA_WEIGHTS_COUNT        (1)
-#define AI_COOLER_DATA_WEIGHT_1_SIZE        (462608)
+#define AI_COOLER_DATA_WEIGHT_1_SIZE        (200712)
 
 
 
